@@ -1,4 +1,4 @@
-package com.emonet.ai.EmoNet;
+package com.emonet.ai.emonet;
 
 import android.os.Build;
 import android.os.Bundle;

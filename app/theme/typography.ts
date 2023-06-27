@@ -10,15 +10,36 @@ import {
   SpaceGrotesk_700Bold as spaceGroteskBold,
 } from "@expo-google-fonts/space-grotesk"
 
+import {
+  Rubik_300Light as rubikLight,
+  Rubik_400Regular as rubikRegular,
+  Rubik_500Medium as rubikMedium,
+  Rubik_600SemiBold as rubikSemiBold,
+  Rubik_700Bold as rubikBold,
+} from "@expo-google-fonts/rubik"
+
 export const customFontsToLoad = {
   spaceGroteskLight,
   spaceGroteskRegular,
   spaceGroteskMedium,
   spaceGroteskSemiBold,
   spaceGroteskBold,
+  rubikLight,
+  rubikRegular,
+  rubikMedium,
+  rubikSemiBold,
+  rubikBold
 }
 
 const fonts = {
+  rubik: {
+    // Cross-platform Google font.
+    light: "rubikLight",
+    normal: "rubikRegular",
+    medium: "rubikMedium",
+    semiBold: "rubikSemiBold",
+    bold: "rubikBold",
+  },
   spaceGrotesk: {
     // Cross-platform Google font.
     light: "spaceGroteskLight",
@@ -59,7 +80,7 @@ export const typography = {
   /**
    * The primary font. Used in most places.
    */
-  primary: fonts.spaceGrotesk,
+  primary: fonts.rubik,
   /**
    * An alternate font used for perhaps titles and stuff.
    */

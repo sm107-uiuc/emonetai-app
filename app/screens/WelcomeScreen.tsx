@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite"
-import React, { FC } from "react"
+import React, { FC, useEffect } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import {
   Button, // @demo remove-current-line
@@ -11,7 +11,9 @@ import { AppStackScreenProps } from "../navigators" // @demo remove-current-line
 import { colors, spacing } from "../theme"
 import { useHeader } from "../utils/useHeader" // @demo remove-current-line
 import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
-
+import {useAuth0} from "react-native-auth0";
+import { loadString, saveString } from "app/utils/storage"
+import _ from 'lodash';
 const welcomeLogo = require("../../assets/images/logo.png")
 const welcomeFace = require("../../assets/images/welcome-face.png")
 
@@ -22,20 +24,26 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
 ) {
   // @demo remove-block-start
   const { navigation } = _props
+  const { clearSession, user, getCredentials } = useAuth0();
   const {
     authenticationStore: { logout },
+    userStore: {setIsWelcome}
   } = useStores()
 
-  function goNext() {
-    navigation.navigate("Demo", { screen: "DemoShowroom" })
+  async function logoutAuth() {
+    await clearSession();
   }
 
+  async function goNext() {
+    await setIsWelcome();
+    navigation.navigate("Main", { screen: "RecordJournal" })
+  }
   useHeader(
     {
       rightTx: "common.logOut",
-      onRightPress: logout,
+      onRightPress: logoutAuth,
     },
-    [logout],
+    [logoutAuth],
   )
   // @demo remove-block-end
 

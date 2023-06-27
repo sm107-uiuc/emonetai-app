@@ -33,7 +33,7 @@ const en = {
   loginScreen: {
     signIn: "Sign In",
     enterDetails:
-      "Enter your details below to unlock top secret info. You'll never guess what we've got waiting. Or maybe you will; it's not rocket science here.",
+      "Welcome to EmoNet, the AI powered voice journal app! Sign in to access your private space for recording your thoughts.",
     emailFieldLabel: "Email",
     passwordFieldLabel: "Password",
     emailFieldPlaceholder: "Enter your email address",
@@ -46,6 +46,8 @@ const en = {
     debugTab: "Debug",
     communityTab: "Community",
     podcastListTab: "Podcast",
+    recordJournal: "Record Journal",
+    viewJournal: "Journey",
   },
   demoCommunityScreen: {
     title: "Connect with the community",

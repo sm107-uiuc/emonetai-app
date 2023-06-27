@@ -31,12 +31,14 @@
     "react-error-overlay": "6.0.9"
   },
   "dependencies": {
+    "@expo-google-fonts/rubik": "^0.2.3",
     "@expo-google-fonts/space-grotesk": "^0.2.2",
     "@expo/webpack-config": "^18.0.1",
     "@react-native-async-storage/async-storage": "1.17.11",
     "@react-navigation/bottom-tabs": "^6.3.2",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.0.2",
+    "@twilio/voice-react-native-sdk": "^1.0.0-beta.1",
     "apisauce": "2.1.5",
     "date-fns": "^2.29.2",
     "expo": "^48.0.15",
@@ -51,11 +53,14 @@
     "expo-splash-screen": "~0.18.1",
     "expo-status-bar": "~1.4.4",
     "i18n-js": "3.9.2",
+    "lodash": "^4.17.21",
+    "lottie-react-native": "^5.1.6",
     "mobx": "6.6.0",
     "mobx-react-lite": "3.4.0",
     "mobx-state-tree": "5.1.5",
     "react": "18.2.0",
-    "react-native": "0.71.7",
+    "react-native": "0.71.8",
+    "react-native-auth0": "^2.17.4",
     "react-native-bootsplash": "4.5.0",
     "react-native-gesture-handler": "~2.9.0",
     "react-native-reanimated": "~2.14.4",
@@ -112,7 +117,7 @@
     "reactotron-core-client": "^2.8.10",
     "regenerator-runtime": "^0.13.4",
     "ts-jest": "29",
-    "typescript": "^5.0.4"
+    "typescript": "^4.9.4"
   },
   "resolutions": {
     "@types/react": "^18",
@@ -152,7 +157,7 @@
       }
     },
     "globals": {
-      "__DEV__": false,
+      "__DEV__": true,
       "jasmine": false,
       "beforeAll": false,
       "afterAll": false,

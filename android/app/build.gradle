@@ -113,13 +113,14 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.emonet.ai.EmoNet"
+    namespace "com.emonet.ai.emonet"
     defaultConfig {
-        applicationId "com.emonet.ai.EmoNet"
+        applicationId "com.emonet.ai.emonet"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        manifestPlaceholders = [auth0Domain: "emonet-dev.us.auth0.com", auth0Scheme: "com.emonet.ai.emonet"]
     }
 
     splits {

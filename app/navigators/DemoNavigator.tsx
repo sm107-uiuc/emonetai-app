@@ -9,12 +9,16 @@ import { DemoCommunityScreen, DemoShowroomScreen, DemoDebugScreen } from "../scr
 import { DemoPodcastListScreen } from "../screens/DemoPodcastListScreen"
 import { colors, spacing, typography } from "../theme"
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
-
+import { useHeader } from "app/utils/useHeader"
+import { useBackButtonHandler } from "."
+import { useAuth0 } from "react-native-auth0"
 export type DemoTabParamList = {
   DemoCommunity: undefined
   DemoShowroom: { queryIndex?: string; itemIndex?: string }
   DemoDebug: undefined
   DemoPodcastList: undefined
+  RecordJournal: undefined,
+  Journey: undefined,
 }
 
 /**
@@ -31,7 +35,20 @@ const Tab = createBottomTabNavigator<DemoTabParamList>()
 
 export function DemoNavigator() {
   const { bottom } = useSafeAreaInsets()
-
+  const {clearSession} = useAuth0();
+  async function logoutAuth() {
+    await clearSession();
+  }
+  useHeader(
+    {
+      //leftTx: "common.back",
+      leftIcon: "back",
+      onLeftPress: () => {console.log("back")},
+      rightText: "Logout",
+      onRightPress: logoutAuth,
+    },
+    [],
+  )
   return (
     <Tab.Navigator
       screenOptions={{
@@ -44,7 +61,7 @@ export function DemoNavigator() {
         tabBarItemStyle: $tabBarItem,
       }}
     >
-      <Tab.Screen
+      {/* <Tab.Screen
         name="DemoShowroom"
         component={DemoShowroomScreen}
         options={{
@@ -53,27 +70,27 @@ export function DemoNavigator() {
             <Icon icon="components" color={focused && colors.tint} size={30} />
           ),
         }}
-      />
+      /> */}
 
       <Tab.Screen
-        name="DemoCommunity"
+        name="RecordJournal"
         component={DemoCommunityScreen}
         options={{
-          tabBarLabel: translate("demoNavigator.communityTab"),
+          tabBarLabel: translate("demoNavigator.recordJournal") ,
           tabBarIcon: ({ focused }) => (
-            <Icon icon="community" color={focused && colors.tint} size={30} />
+            <Icon icon="podcast" color={focused && colors.tint} size={30} />
           ),
         }}
       />
 
       <Tab.Screen
-        name="DemoPodcastList"
+        name="Journey"
         component={DemoPodcastListScreen}
         options={{
-          tabBarAccessibilityLabel: translate("demoNavigator.podcastListTab"),
-          tabBarLabel: translate("demoNavigator.podcastListTab"),
+          tabBarAccessibilityLabel: translate("demoNavigator.viewJournal"),
+          tabBarLabel: translate("demoNavigator.viewJournal"),
           tabBarIcon: ({ focused }) => (
-            <Icon icon="podcast" color={focused && colors.tint} size={30} />
+            <Icon icon="menu" color={focused && colors.tint} size={30} />
           ),
         }}
       />

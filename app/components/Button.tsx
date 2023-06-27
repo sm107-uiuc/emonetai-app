@@ -1,5 +1,6 @@
 import React, { ComponentType } from "react"
 import {
+  ActivityIndicator,
   Pressable,
   PressableProps,
   PressableStateCallbackType,
@@ -64,7 +65,11 @@ export interface ButtonProps extends PressableProps {
   /**
    * Children components.
    */
-  children?: React.ReactNode
+  children?: React.ReactNode,
+  /**
+   * Is loading
+   */
+  isLoading?: boolean,
 }
 
 /**
@@ -110,9 +115,17 @@ export function Button(props: ButtonProps) {
         <>
           {!!LeftAccessory && <LeftAccessory style={$leftAccessoryStyle} pressableState={state} />}
 
-          <Text tx={tx} text={text} txOptions={txOptions} style={$textStyle(state)}>
-            {children}
-          </Text>
+          {
+            !props.isLoading ? (
+              <Text tx={tx} text={text} txOptions={txOptions} style={$textStyle(state)}>
+                  {children}
+              </Text>
+            ) : ( <ActivityIndicator 
+                    size="small"
+                    color={colors.palette.neutral100}
+                  />
+                )
+          }
 
           {!!RightAccessory && (
             <RightAccessory style={$rightAccessoryStyle} pressableState={state} />

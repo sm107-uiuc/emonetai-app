@@ -12,7 +12,7 @@ import {
 } from "@react-navigation/native"
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
 import { observer } from "mobx-react-lite"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { useColorScheme } from "react-native"
 import * as Screens from "app/screens"
 import Config from "../config"
@@ -20,6 +20,8 @@ import { useStores } from "../models" // @demo remove-current-line
 import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" // @demo remove-current-line
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { colors } from "app/theme"
+import {useAuth0, Auth0Provider} from "react-native-auth0";
+import { set } from "date-fns"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -39,6 +41,7 @@ export type AppStackParamList = {
   Login: undefined // @demo remove-current-line
   Demo: NavigatorScreenParams<DemoTabParamList> // @demo remove-current-line
   // 🔥 Your screens go here
+  Main: NavigatorScreenParams<DemoTabParamList> // @demo remove-current-line
   // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
 
@@ -53,28 +56,38 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStack
   T
 >
 
+
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
-const AppStack = observer(function AppStack() {
+const AppStack = observer(function AppStack(props: any) {
   // @demo remove-block-start
-  const {
-    authenticationStore: { isAuthenticated },
-  } = useStores()
+  // const {
+  //   authenticationStore: { isAuthenticated },
+  // } = useStores()
 
+  const { user, isLoading } = useAuth0();
+  const {userStore} = useStores();
+  useEffect(() => {
+   if(!isLoading) {
+    setTimeout(() => {
+      props.handleSplashScreen();
+    }, 500);
+   }
+  }, [isLoading]);
   // @demo remove-block-end
   return (
-    <Stack.Navigator
+    isLoading ? <></> : <Stack.Navigator
       screenOptions={{ headerShown: false, navigationBarColor: colors.background }}
-      initialRouteName={isAuthenticated ? "Welcome" : "Login"} // @demo remove-current-line
+      initialRouteName={user ? "Main" : "Login"} // @demo remove-current-line
     >
       {/* @demo remove-block-start */}
-      {isAuthenticated ? (
+      {user ? (
         <>
           {/* @demo remove-block-end */}
           <Stack.Screen name="Welcome" component={Screens.WelcomeScreen} />
           {/* @demo remove-block-start */}
-          <Stack.Screen name="Demo" component={DemoNavigator} />
+          <Stack.Screen name="Main" component={DemoNavigator} />
         </>
       ) : (
         <>
@@ -89,11 +102,12 @@ const AppStack = observer(function AppStack() {
 })
 
 export interface NavigationProps
-  extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
+  extends Partial<React.ComponentProps<typeof NavigationContainer>> {
+    handleSplashScreen: () => void
+  }
 
 export const AppNavigator = observer(function AppNavigator(props: NavigationProps) {
   const colorScheme = useColorScheme()
-
   useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
 
   return (
@@ -102,7 +116,14 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
       {...props}
     >
-      <AppStack />
+    <Auth0Provider 
+    domain={"emonet-dev.us.auth0.com"} 
+    clientId={"vqUXfK2RdeUhnZFBaFmxZoBMBjWN0kqa"}
+    
+    >
+       <AppStack handleSplashScreen={props.handleSplashScreen}/>
+    </Auth0Provider>
+     
     </NavigationContainer>
   )
 })

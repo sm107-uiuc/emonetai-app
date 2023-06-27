@@ -23,6 +23,7 @@ import { clear } from "../../utils/storage"
 import { ReactotronConfig, DEFAULT_REACTOTRON_CONFIG } from "./reactotronConfig"
 import { goBack, resetRoot, navigate } from "../../navigators/navigationUtilities"
 import { fakeReactotron } from "./reactotronFake"
+import { asyncStorage } from 'reactotron-react-native'
 
 /**
  * We tell typescript we intend to hang Reactotron off of the console object.
@@ -46,6 +47,7 @@ declare global {
 
 // in dev, we attach Reactotron, in prod we attach a interface-compatible mock.
 if (__DEV__) {
+  console.log("####################################################################################################")
   console.tron = Reactotron // attach reactotron to `console.tron`
 } else {
   // attach a mock so if things sneak by our __DEV__ guards, we won't crash.
@@ -93,13 +95,15 @@ export function setupReactotron(customConfig: ReactotronConfig = {}) {
     // only setup once.
     if (_reactotronIsSetUp) return
 
+    console.log("****************************************************************************************************")
     // merge the passed in config with our default config
     Object.assign(config, customConfig)
 
     // configure reactotron
     Reactotron.configure({
-      name: config.name || require("../../../package.json").name,
-      host: config.host,
+      name: 'emonet-ai-app',
+      host: '192.168.1.3',
+      port: 9090
     })
 
     // hookup middleware
@@ -119,8 +123,11 @@ export function setupReactotron(customConfig: ReactotronConfig = {}) {
     Reactotron.use(
       mst({
         filter: (event) => RX.test(event.name) === false,
-      }),
+      })
     )
+
+    // Async Storage
+    Reactotron.use(asyncStorage({}))
 
     // connect to the app
     Reactotron.connect()
@@ -151,6 +158,23 @@ export function setupReactotron(customConfig: ReactotronConfig = {}) {
         Reactotron.log("resetting navigation state")
         resetRoot({ index: 0, routes: [] })
       },
+    })
+
+    Reactotron.onCustomCommand({
+      title: "Reset Async Storage Key",
+      description: "Resets the key for async storage",
+      command: "resetAsyncStorageKey",
+      handler: async (args) => {
+        const { key } = args
+        Reactotron.log("resetting Async Storage key")
+        await AsyncStorage.removeItem(key)
+      },
+      args: [
+        {
+          name: "key",
+          type: ArgType.String,
+        }
+      ]
     })
 
     Reactotron.onCustomCommand({
