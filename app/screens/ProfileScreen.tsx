@@ -44,9 +44,9 @@ export const ProfileScreen: FC<ProfileScreenProps> = observer(function ProfileSc
     {
       leftIcon: "circleBack",
       onLeftPress: () => goBack(),
-      rightIcon: "vector",
-      rightTx: "common.logOut",
-      onRightPress: logoutAuth,
+      // rightIcon: "vector",
+      // rightTx: "common.logOut",
+      // onRightPress: logoutAuth,
     },
     [logoutAuth],
   )
@@ -64,6 +64,7 @@ export const ProfileScreen: FC<ProfileScreenProps> = observer(function ProfileSc
         <View style={$whiteBox}></View>
         <View style={$whiteCircle}></View>
         <TouchableOpacity style={$profilePic}></TouchableOpacity>
+
         <TouchableOpacity>
           <View style={$buttons}>
             <Icon icon="account" />
@@ -76,7 +77,7 @@ export const ProfileScreen: FC<ProfileScreenProps> = observer(function ProfileSc
           <View style={$buttons}>
             <Icon icon="terms" />
             <Icon icon="right" style={{ position: "absolute", top: -10, left: 265 }} />
-            <Text style={$text}>Terms of service</Text>
+            <Text style={$text}> Terms of service</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity>
@@ -109,7 +110,7 @@ const $text: TextStyle = {
 
 const $buttons: ViewStyle = {
   padding: 25,
-  marginTop: 16,
+  marginTop: -10,
   flexDirection: "row",
   bottom: 100,
   width: 350,
@@ -139,7 +140,7 @@ const $profilePic: ViewStyle = {
   width: 140,
   height: 140,
   borderRadius: 70,
-  backgroundColor: "pink",
+  backgroundColor: "grey",
 }
 
 const $whiteBox: ViewStyle = {
