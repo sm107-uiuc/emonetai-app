@@ -59,6 +59,7 @@ export function DemoNavigator(_props: any) {
     {
       //leftTx: "common.back",
       leftIcon: "community",
+      // leftIconSize: 20,
       onLeftPress: () => navigation.navigate("Profile", {}),
       rightText: "Logout",
       onRightPress: logoutAuth,
