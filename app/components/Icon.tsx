@@ -9,6 +9,7 @@ import {
   View,
   ViewStyle,
 } from "react-native"
+import { MaterialCommunityIcons } from "@expo/vector-icons"
 
 export type IconTypes = keyof typeof iconRegistry
 
@@ -107,6 +108,15 @@ export const iconRegistry = {
   slack: require("../../assets/icons/slack.png"),
   view: require("../../assets/icons/view.png"),
   x: require("../../assets/icons/x.png"),
+  circleBack: require("../../assets/icons/circleBack.png"),
+  vector: require("../../assets/icons/Vector.png"),
+  account: require("../../assets/icons/account.png"),
+  right: require("../../assets/icons/Right.png"),
+  terms: require("../../assets/icons/terms.png"),
+  privacy: require("../../assets/icons/privacy.png"),
+  accel: require("../../assets/icons/accel.png"),
+
+  // profile: MaterialCommunityIcons,
 }
 
 const $imageStyle: ImageStyle = {

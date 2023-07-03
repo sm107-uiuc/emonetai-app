@@ -20,8 +20,9 @@ import { useStores } from "../models" // @demo remove-current-line
 import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" // @demo remove-current-line
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { colors } from "app/theme"
-import {useAuth0, Auth0Provider} from "react-native-auth0";
+import { useAuth0, Auth0Provider } from "react-native-auth0"
 import { set } from "date-fns"
+import { Icon } from "app/components"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -43,6 +44,7 @@ export type AppStackParamList = {
   // 🔥 Your screens go here
   Main: NavigatorScreenParams<DemoTabParamList> // @demo remove-current-line
   // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
+  Profile: NavigatorScreenParams<DemoTabParamList>
 }
 
 /**
@@ -56,7 +58,6 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStack
   T
 >
 
-
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
@@ -66,18 +67,20 @@ const AppStack = observer(function AppStack(props: any) {
   //   authenticationStore: { isAuthenticated },
   // } = useStores()
 
-  const { user, isLoading } = useAuth0();
-  const {userStore} = useStores();
+  const { user, isLoading } = useAuth0()
+  const { userStore } = useStores()
   useEffect(() => {
-   if(!isLoading) {
-    setTimeout(() => {
-      props.handleSplashScreen();
-    }, 500);
-   }
-  }, [isLoading]);
+    if (!isLoading) {
+      setTimeout(() => {
+        props.handleSplashScreen()
+      }, 500)
+    }
+  }, [isLoading])
   // @demo remove-block-end
-  return (
-    isLoading ? <></> : <Stack.Navigator
+  return isLoading ? (
+    <></>
+  ) : (
+    <Stack.Navigator
       screenOptions={{ headerShown: false, navigationBarColor: colors.background }}
       initialRouteName={user ? "Main" : "Login"} // @demo remove-current-line
     >
@@ -96,15 +99,24 @@ const AppStack = observer(function AppStack(props: any) {
       )}
       {/* @demo remove-block-end */}
       {/** 🔥 Your screens go here */}
+      <Stack.Screen
+        name="Profile"
+        component={Screens.ProfileScreen}
+        options={{
+          title: "Profile",
+          headerRight: () => (
+            <Icon icon="vector" size={390} style={{ position: "absolute", top: -110, right: 0 }} />
+          ),
+        }}
+      />
       {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>
   )
 })
 
-export interface NavigationProps
-  extends Partial<React.ComponentProps<typeof NavigationContainer>> {
-    handleSplashScreen: () => void
-  }
+export interface NavigationProps extends Partial<React.ComponentProps<typeof NavigationContainer>> {
+  handleSplashScreen: () => void
+}
 
 export const AppNavigator = observer(function AppNavigator(props: NavigationProps) {
   const colorScheme = useColorScheme()
@@ -116,14 +128,12 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
       {...props}
     >
-    <Auth0Provider 
-    domain={"emonet-dev.us.auth0.com"} 
-    clientId={"vqUXfK2RdeUhnZFBaFmxZoBMBjWN0kqa"}
-    
-    >
-       <AppStack handleSplashScreen={props.handleSplashScreen}/>
-    </Auth0Provider>
-     
+      <Auth0Provider
+        domain={"emonet-dev.us.auth0.com"}
+        clientId={"vqUXfK2RdeUhnZFBaFmxZoBMBjWN0kqa"}
+      >
+        <AppStack handleSplashScreen={props.handleSplashScreen} />
+      </Auth0Provider>
     </NavigationContainer>
   )
 })
