@@ -44,7 +44,10 @@ export type AppStackParamList = {
   // 🔥 Your screens go here
   Main: NavigatorScreenParams<DemoTabParamList> // @demo remove-current-line
   // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
-  Profile: NavigatorScreenParams<DemoTabParamList>
+  Profile: undefined
+  FirstScreen: undefined
+  SecondScreen: undefined
+  ThirdScreen: undefined
 }
 
 /**
@@ -99,16 +102,11 @@ const AppStack = observer(function AppStack(props: any) {
       )}
       {/* @demo remove-block-end */}
       {/** 🔥 Your screens go here */}
-      <Stack.Screen
-        name="Profile"
-        component={Screens.ProfileScreen}
-        options={{
-          title: "Profile",
-          headerRight: () => (
-            <Icon icon="vector" size={390} style={{ position: "absolute", top: -110, right: 0 }} />
-          ),
-        }}
-      />
+      <Stack.Screen name="Profile" component={Screens.ProfileScreen} />
+      <Stack.Screen name="FirstScreen" component={Screens.FirstScreen} />
+      <Stack.Screen name="SecondScreen" component={Screens.SecondScreen} />
+      <Stack.Screen name="ThirdScreen" component={Screens.ThirdScreen} />
+
       {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>
   )

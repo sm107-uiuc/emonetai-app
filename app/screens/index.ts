@@ -7,4 +7,8 @@ export * from "./DemoShowroomScreen/DemoShowroomScreen"
 // @demo remove-block-end
 export * from "./ErrorScreen/ErrorBoundary"
 // export other screens here
-export * from "./ProfileScreen"
+export * from "./ProfileScreen/ProfileScreen"
+export * from "./OnBoardingScreens/FirstScreen"
+export * from "./OnBoardingScreens/SecondScreen"
+export * from "./OnBoardingScreens/ThirdScreen"
+

@@ -206,8 +206,9 @@ export function Header(props: HeaderProps) {
           ActionComponent={LeftActionComponent}
         />
 
-        <HeaderAction
+        <HeaderAction 
           icon={middleIcon}
+          
           iconSize={middleIconSize}
           iconColor={middleIconColor}
           // onPress={onRightPress}
