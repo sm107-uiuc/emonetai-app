@@ -5,11 +5,11 @@ import { Button, Icon, Screen, Text, TextField, TextFieldAccessoryProps } from "
 import { useStores } from "../models"
 import { AppStackScreenProps } from "../navigators"
 import { colors, spacing } from "../theme"
-import {useAuth0} from "react-native-auth0";
-import Lottie from 'lottie-react-native';
+import { useAuth0 } from "react-native-auth0"
+import Lottie from "lottie-react-native"
 import { loadString } from "app/utils/storage"
 import { el } from "date-fns/locale"
-import _ from 'lodash';
+import _ from "lodash"
 
 interface LoginScreenProps extends AppStackScreenProps<"Login"> {}
 
@@ -22,19 +22,20 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
   const [attemptsCount, setAttemptsCount] = useState(0)
   const {
     authenticationStore: { authEmail, setAuthEmail, setAuthToken, validationError },
-    userStore: { isWelcome }
+    userStore: { isOnBoarded },
   } = useStores()
-  const {authorize, user, isLoading} = useAuth0();
+  const { authorize, user, isLoading } = useAuth0()
   const { navigation } = _props
-  console.tron.log("isLoading", isLoading);
+  console.tron.log("isLoading", isLoading)
   useEffect(() => {
-    if(!_.isEmpty(user)) {
-      console.log("Hitting here");
-      console.tron.log("isWelcome", isWelcome)
-      if(isWelcome)
-        navigation.navigate("Main", { screen: "RecordJournal" })
-      else  
-        navigation.navigate("Welcome")
+    if (!_.isEmpty(user)) {
+      console.log("Hitting here")
+      console.tron.log("isOnBoarded", isOnBoarded)
+      if (isOnBoarded)
+        navigation.navigate("Main", {
+          screen: "RecordJournal",
+        }) // screen name needs to change to the HomeScreen, I don't have the most updated version
+      else navigation.navigate("FirstScreen")
     }
   }, [user])
 
@@ -42,13 +43,16 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
 
   async function login() {
     try {
-        await authorize({
-          connection: 'sms',
-          scope: 'openid profile email',
-          audience:'https://api.emonet.ai'
-        }, {ephemeralSession: true});
+      await authorize(
+        {
+          connection: "sms",
+          scope: "openid profile email",
+          audience: "https://api.emonet.ai",
+        },
+        { ephemeralSession: true },
+      )
     } catch (e) {
-        console.log("Error", e);
+      console.log("Error", e)
     }
   }
 
@@ -81,12 +85,17 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
       contentContainerStyle={$screenContentContainer}
       safeAreaEdges={["top", "bottom"]}
     >
-     <View style={$viewContainer}>
-      <Text testID="login-heading" tx="loginScreen.signIn" preset="heading" style={$signIn} />
-      <Text tx="loginScreen.enterDetails" preset="subheading" style={$enterDetails} />
-    </View>
+      <View style={$viewContainer}>
+        <Text testID="login-heading" tx="loginScreen.signIn" preset="heading" style={$signIn} />
+        <Text tx="loginScreen.enterDetails" preset="subheading" style={$enterDetails} />
+      </View>
       <View style={$lottie}>
-        <Lottie source={require('../../assets/animations/login.json')} resizeMode="contain" autoPlay loop/>
+        <Lottie
+          source={require("../../assets/animations/login.json")}
+          resizeMode="contain"
+          autoPlay
+          loop
+        />
       </View>
       <Button
         testID="login-button"
@@ -96,25 +105,23 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         onPress={login}
         isLoading={isLoading}
       />
-          
     </Screen>
   )
 })
 
 const $lottie: ViewStyle = {
-  height: '50%',
+  height: "50%",
 }
-
 
 const $screenContentContainer: ViewStyle = {
   paddingVertical: spacing.xxl,
   paddingHorizontal: spacing.lg,
-  height: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  alignContent: 'center',
-  width: '100%',
-  justifyContent: 'center',
+  height: "100%",
+  display: "flex",
+  flexDirection: "column",
+  alignContent: "center",
+  width: "100%",
+  justifyContent: "center",
 }
 
 const $signIn: TextStyle = {
@@ -125,9 +132,7 @@ const $enterDetails: TextStyle = {
   marginBottom: spacing.lg,
 }
 
-const $viewContainer: ViewStyle = {
-  
-}
+const $viewContainer: ViewStyle = {}
 
 const $hint: TextStyle = {
   color: colors.tint,

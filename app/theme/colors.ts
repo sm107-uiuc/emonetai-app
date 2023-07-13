@@ -2,16 +2,16 @@
 
 const palette = {
   neutral100: "#FFFFFF",
-  neutral200: "#E8C7C8",
-  neutral300: "#C88EA7",
-  neutral400: "#99627A",
-  neutral500: "#978F8A",
+  neutral200: "#F7F7F7",
+  neutral300: "#F7FBFF",
+  neutral400: "#F4F7FB",
+  neutral500: "#909597",
   neutral600: "#564E4A",
   neutral700: "#3C3836",
-  neutral800: "#455A64",
+  neutral800: "#333335",
   neutral900: "#000000",
 
-  primary100: "#E8C7C8",
+  primary100: "#4973E1",
   primary200: "#E8C1B4",
   primary300: "#DDA28E",
   primary400: "#D28468",
@@ -24,11 +24,14 @@ const palette = {
   secondary400: "#626894",
   secondary500: "#41476E",
 
-  accent100: "#FFEED4",
+  accent100: "#E6E8EA",
   accent200: "#FFE1B2",
   accent300: "#FDD495",
   accent400: "#FBC878",
   accent500: "#FFBB50",
+
+  blush100: "#F8F2F2",
+  blueButton100: "#5C8FEE",
 
   angry100: "#F2D6CD",
   angry500: "#C03403",
@@ -52,6 +55,7 @@ export const colors = {
    * The default text color in many components.
    */
   text: palette.neutral800,
+  darkBackgroundText: palette.neutral200,
   /**
    * Secondary text information.
    */
@@ -67,7 +71,8 @@ export const colors = {
   /**
    * The main tinting color.
    */
-  tint: palette.primary500,
+  tint: palette.primary100,
+  inactiveTint: palette.neutral500,
   /**
    * A subtle color used for lines.
    */
@@ -80,5 +85,9 @@ export const colors = {
    * Error Background.
    *
    */
+  primaryActionBackground: palette.primary100,
+  secondaryActionBackground: palette.accent100,
   errorBackground: palette.angry100,
+  onBoardingBackground: palette.blush100,
+  blueButton: palette.blueButton100,
 }

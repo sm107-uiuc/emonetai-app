@@ -40,7 +40,7 @@ const rnrImages = [rnrImage1, rnrImage2, rnrImage3]
 export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = observer(
   function DemoPodcastListScreen(_props) {
     const { episodeStore } = useStores()
-
+    const { userStore } = useStores()
     const [refreshing, setRefreshing] = React.useState(false)
     const [isLoading, setIsLoading] = React.useState(false)
 

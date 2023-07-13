@@ -9,14 +9,15 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-
+import { Ionicons } from "@expo/vector-icons"
+import { MaterialCommunityIcons } from "@expo/vector-icons"
 export type IconTypes = keyof typeof iconRegistry
 
 interface IconProps extends TouchableOpacityProps {
   /**
    * The name of the icon
    */
-  icon: IconTypes
+  icon: IconTypes | string
 
   /**
    * An optional tint color for the icon
@@ -42,6 +43,11 @@ interface IconProps extends TouchableOpacityProps {
    * An optional function to be called when the icon is pressed
    */
   onPress?: TouchableOpacityProps["onPress"]
+
+  /**
+   * Is this an Ionicon?
+   */
+  isIonicon?: boolean
 }
 
 /**
@@ -57,6 +63,7 @@ export function Icon(props: IconProps) {
     size,
     style: $imageStyleOverride,
     containerStyle: $containerStyleOverride,
+    isIonicon,
     ...WrapperProps
   } = props
 
@@ -71,15 +78,24 @@ export function Icon(props: IconProps) {
       {...WrapperProps}
       style={$containerStyleOverride}
     >
-      <Image
-        style={[
-          $imageStyle,
-          color && { tintColor: color },
-          size && { width: size, height: size },
-          $imageStyleOverride,
-        ]}
-        source={iconRegistry[icon]}
-      />
+      {isIonicon ? (
+        <Ionicons
+          name={icon as any}
+          color={color as any}
+          size={size as any}
+          style={[$imageStyleOverride]}
+        ></Ionicons>
+      ) : (
+        <Image
+          style={[
+            $imageStyle,
+            color && { tintColor: color },
+            size && { width: size, height: size },
+            $imageStyleOverride,
+          ]}
+          source={iconRegistry[icon]}
+        />
+      )}
     </Wrapper>
   )
 }
@@ -107,6 +123,16 @@ export const iconRegistry = {
   slack: require("../../assets/icons/slack.png"),
   view: require("../../assets/icons/view.png"),
   x: require("../../assets/icons/x.png"),
+  microphone: require("../../assets/icons/microphone.png"),
+  emonet: require("../../assets/icons/emonet.png"),
+  circleBack: require("../../assets/icons/circleBack.png"),
+  vector: require("../../assets/icons/Vector.png"),
+  account: require("../../assets/icons/account.png"),
+  right: require("../../assets/icons/Right.png"),
+  terms: require("../../assets/icons/terms.png"),
+  privacy: require("../../assets/icons/privacy.png"),
+  accel: require("../../assets/icons/accel.png"),
+  // onBoardOne: require("../../assetsicons/")
 }
 
 const $imageStyle: ImageStyle = {

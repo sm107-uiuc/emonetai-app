@@ -12,6 +12,7 @@ import { colors, spacing } from "../theme"
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 import { Icon, IconTypes } from "./Icon"
 import { Text, TextProps } from "./Text"
+import { IconProps } from "@expo/vector-icons/build/createIconSet"
 
 export interface HeaderProps {
   /**
@@ -61,11 +62,20 @@ export interface HeaderProps {
   /**
    * An optional tint color for the left icon
    */
+  leftIconSize?: number
   leftIconColor?: string
   /**
    * Left action text to display if not using `leftTx`.
    * Can be used with `onLeftPress`. Overrides `leftIcon`.
    */
+
+  middleIcon?: IconTypes
+  /**
+   * An optional tint color for the left icon
+   */
+  middleIconSize?: number
+  middleIconColor?: string
+
   leftText?: TextProps["text"]
   /**
    * Left action text text which is looked up via i18n.
@@ -94,6 +104,7 @@ export interface HeaderProps {
   /**
    * An optional tint color for the right icon
    */
+  rightIconSize?: number
   rightIconColor?: string
   /**
    * Right action text to display if not using `rightTx`.
@@ -128,6 +139,7 @@ export interface HeaderProps {
 interface HeaderActionProps {
   backgroundColor?: string
   icon?: IconTypes
+  iconSize?: number
   iconColor?: string
   text?: TextProps["text"]
   tx?: TextProps["tx"]
@@ -147,7 +159,11 @@ export function Header(props: HeaderProps) {
     backgroundColor = colors.background,
     LeftActionComponent,
     leftIcon,
+    leftIconSize,
     leftIconColor,
+    middleIcon,
+    middleIconSize,
+    middleIconColor,
     leftText,
     leftTx,
     leftTxOptions,
@@ -155,6 +171,7 @@ export function Header(props: HeaderProps) {
     onRightPress,
     RightActionComponent,
     rightIcon,
+    rightIconSize,
     rightIconColor,
     rightText,
     rightTx,
@@ -181,11 +198,22 @@ export function Header(props: HeaderProps) {
           tx={leftTx}
           text={leftText}
           icon={leftIcon}
+          iconSize={leftIconSize}
           iconColor={leftIconColor}
           onPress={onLeftPress}
           txOptions={leftTxOptions}
           backgroundColor={backgroundColor}
           ActionComponent={LeftActionComponent}
+        />
+
+        <HeaderAction 
+          icon={middleIcon}
+          
+          iconSize={middleIconSize}
+          iconColor={middleIconColor}
+          // onPress={onRightPress}
+          backgroundColor={backgroundColor}
+          ActionComponent={RightActionComponent}
         />
 
         {!!titleContent && (
@@ -210,6 +238,7 @@ export function Header(props: HeaderProps) {
           tx={rightTx}
           text={rightText}
           icon={rightIcon}
+          iconSize={rightIconSize}
           iconColor={rightIconColor}
           onPress={onRightPress}
           txOptions={rightTxOptions}
@@ -222,7 +251,17 @@ export function Header(props: HeaderProps) {
 }
 
 function HeaderAction(props: HeaderActionProps) {
-  const { backgroundColor, icon, text, tx, txOptions, onPress, ActionComponent, iconColor } = props
+  const {
+    backgroundColor,
+    icon,
+    text,
+    tx,
+    txOptions,
+    onPress,
+    ActionComponent,
+    iconColor,
+    iconSize,
+  } = props
 
   const content = tx ? translate(tx, txOptions) : text
 
@@ -244,7 +283,7 @@ function HeaderAction(props: HeaderActionProps) {
   if (icon) {
     return (
       <Icon
-        size={24}
+        size={iconSize || 24}
         icon={icon}
         color={iconColor}
         onPress={onPress}
